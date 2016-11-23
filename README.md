@@ -1,5 +1,5 @@
 # usbong_likha_collection
-scaffold; does not include the .utree file (i.e. actual content)
+scaffold; does not include the .utree files (i.e. actual content)
 
 # Official Company Website
 http://www.usbong.ph
