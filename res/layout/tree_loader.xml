@@ -22,7 +22,7 @@
 		android:layout_height="wrap_content"
 		android:padding="3dip"
 		android:textSize="30dp"
-		android:textColor="#4a452a"
+		android:textColor="#ffffff"
 		android:layout_toRightOf="@+id/tree_item_image_view"
         android:layout_marginBottom="6dp"		
         android:layout_marginLeft="6dp"		

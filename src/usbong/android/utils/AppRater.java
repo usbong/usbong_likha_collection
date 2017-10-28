@@ -18,7 +18,7 @@
 
 package usbong.android.utils;
 
-import usbong.android.likha_collection_1.R;
+import usbong.android.likha_collection_2.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;

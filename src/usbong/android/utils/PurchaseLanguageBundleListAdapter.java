@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import usbong.android.likha_collection_1.R;
+import usbong.android.likha_collection_2.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;

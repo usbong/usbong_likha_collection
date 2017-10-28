@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	    package="usbong.android.likha_collection_1"
-	    android:versionCode="2"
-	    android:versionName="1.0.1-20161118"
+	    package="usbong.android.likha_collection_2"
+	    android:versionCode="1"
+	    android:versionName="1.0.0-20171028"
         android:installLocation="auto"      
 >
     <uses-sdk android:minSdkVersion="11" 

@@ -1,6 +1,6 @@
 package usbong.android.features.node;
 
-import usbong.android.likha_collection_1.UsbongDecisionTreeEngineActivity;
+import usbong.android.likha_collection_2.UsbongDecisionTreeEngineActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
