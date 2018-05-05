@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="hello_world">Hello World, UsbongActivity!</string>
-    <string name="app_name">Usbong LIKHA Collection 2</string>
+    <string name="app_name">Usbong LIKHA Collection 1</string>
     <string name="start">Start</string>
     <string name="cover_img">Cover Image</string>
     <string name="usbong_logo">Usbong Logo</string>        

@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -85,15 +86,20 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	        setContentView(R.layout.main);	        
 	        instance = this;
 //	    	startTime = new Date();
-	    	
+	    		        
             //added by Mike, 20161117
         	Bundle extras = getIntent().getExtras();
-        	if (extras!=null) {
-	        	String message = extras.getString("completed_tree");
-
+        	if (extras!=null) {      		
+/*	        	String message = extras.getString("completed_tree");
+*/
+        		//added by Mike, 20180505
+        		this.showPromoDialog(extras.getBoolean("completed_tree"));
+        		
+/*
 	        	if (message.equals("true")) {
 			        AppRater.showRateDialog(this); 
 	        	}	        		
+*/	        	
         	}
 	        
 	        reset();
@@ -223,7 +229,7 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
     }
 /*
     private void showStatusDialog(String status)
-	{
+	{    	
 		AlertDialog.Builder prompt = new AlertDialog.Builder(UsbongMainActivity.this);
 		prompt.setTitle("Notification");
 		prompt.setMessage(status);
@@ -235,7 +241,39 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 		});
 		prompt.show();
 	}
-*/	
+*/    
+
+	//added by Mike, 20180505
+    private void showPromoDialog(final boolean isTreeCompleted)
+	{ 
+    	try {
+	    	//Reference: http://www.anddev.org/tinytut_-_get_resources_by_name__getidentifier_-t460.html; last accessed 14 Sept 2011
+	        Resources myRes = instance.getResources();
+	        //TODO: be able to process .png images as well
+	        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open("promo.jpg"), null); 
+	    	ImageView image = new ImageView(this);
+	    	image.setImageDrawable(myDrawableImage);	
+	    	
+	    	
+			AlertDialog.Builder prompt = new AlertDialog.Builder(UsbongMainActivity.this);
+			prompt.setView(image);
+			prompt.setTitle("Usbong Promo Offer!");
+//			prompt.setMessage("Email us: help@usbong.ph");
+			prompt.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+		        	if (isTreeCompleted) {
+				        AppRater.showRateDialog(instance); 
+		        	}	        		
+				}
+			});
+			prompt.show();
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}    	
+	}
+	
     //added by Mike, 29 July 2015
     //Reference: http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android;
     //last accessed: 29 Sept. 2015; answer by Nishant, 2 May 2012; edited by Daniel Nugent, 9 July 2015

@@ -2333,7 +2333,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
     			//added by Mike, 20161118
     			Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
     			toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-    			toUsbongMainActivityIntent.putExtra("completed_tree","true");
+    			toUsbongMainActivityIntent.putExtra("completed_tree",true);
     			startActivity(toUsbongMainActivityIntent);
     		}
     	}
@@ -3264,6 +3264,7 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 		finish();    
 		Intent toUsbongMainActivityIntent = new Intent(UsbongDecisionTreeEngineActivity.this, UsbongMainActivity.class);
 		toUsbongMainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+		toUsbongMainActivityIntent.putExtra("completed_tree",false);
 		startActivity(toUsbongMainActivityIntent);
     }
     

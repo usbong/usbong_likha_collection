@@ -6,9 +6,6 @@ public class UsbongConstants {
     private UsbongConstants() {
 
     }
-    
-    //added by Mike, 20170303
-    public static final int ANIMATION_DELAY = 120;//60; //500
     	
     //SCREEN types constants
 	public static final int YES_NO_DECISION_SCREEN=0;	
@@ -45,12 +42,10 @@ public class UsbongConstants {
 	public static final int SIMPLE_ENCRYPT_SCREEN=31;	
 	public static final int YOUTUBE_VIDEO_SCREEN=32;	
 	public static final int YOUTUBE_VIDEO_WITH_TEXT_SCREEN=33;	
-	public static final int ANIMATE_SCREEN=34;	
-	public static final int ANIMATE_AND_TEXT_SCREEN=35;	
-	public static final int TEXT_AND_ANIMATE_SCREEN=36;	
+	
+	public static final int END_STATE_SCREEN=34;		
 
-	public static final int END_STATE_SCREEN=37;		
-
+    
     //JSON constants
 	public static String MY_TREE = "MY_TREE";
 	public static String CURR_USBONG_NODE = "CURR_USBONG_NODE";
@@ -75,9 +70,9 @@ public class UsbongConstants {
     
     public static final String FROM_MY_YOUTUBE_ACTIVITY_TO_MAIN_MENU = "FROM_MY_YOUTUBE_ACTIVITY_TO_MAIN_MENU";
 
-    public static final String ALL_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_2.all_languages_001"; //added by Mike, 20160620
-    public static final String ALL_LOCAL_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_2.all_local_languages_001";
-    public static final String ALL_FOREIGN_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_2.all_foreign_languages_001";
+    public static final String ALL_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_1.all_languages_001"; //added by Mike, 20160620
+    public static final String ALL_LOCAL_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_1.all_local_languages_001";
+    public static final String ALL_FOREIGN_LANGUAGES_PRODUCT_ID = "usbong.likha_collection_1.all_foreign_languages_001";
     public static final String DEFAULT_PRICE = "1.99USD (50PhP)"; //updated by Mike, 20161110
     public static final String MY_PURCHASED_ITEMS = "MyPurchasedItems"; //added by Mike, 20160427
 

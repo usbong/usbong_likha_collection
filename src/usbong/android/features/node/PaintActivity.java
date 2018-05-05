@@ -17,7 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import usbong.android.multimedia.graphics.MyCanvas;
-import usbong.android.likha_collection_2.R;
+import usbong.android.likha_collection_1.R;
 import usbong.android.utils.UsbongUtils;
 
 public class PaintActivity extends Activity

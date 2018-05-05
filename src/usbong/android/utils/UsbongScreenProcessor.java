@@ -14,34 +14,31 @@
  */
 package usbong.android.utils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import usbong.android.likha_collection_2.R;
-import usbong.android.likha_collection_2.UsbongDecisionTreeEngineActivity;
+import usbong.android.likha_collection_1.R;
+import usbong.android.likha_collection_1.UsbongDecisionTreeEngineActivity;
 import usbong.android.utils.FedorMyLocation.LocationResult;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -52,6 +49,7 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -75,14 +73,6 @@ public class UsbongScreenProcessor
 	public ProgressBar myLoadingProgressBar;
 	
 	public boolean hasGottenGPSLocation;
-	
-	public static int animate_counter=0;
-	public static ImageView myAnimateImageView;
-	public static String frameName;
-	public static int startFrame;
-	public static int endFrame;
-	public static List<Bitmap> frames;
-	public static boolean hasInitHandler; //added by Mike, 20170428
 	
 	public UsbongScreenProcessor(){		
 	}
@@ -742,187 +732,7 @@ public class UsbongScreenProcessor
 				}
 			}).show();
 						
-		} else if (udtea.currScreen == UsbongConstants.ANIMATE_SCREEN) {
-			udtea.setContentView(R.layout.animate_screen);
-			udtea.initBackNextButtons();
-			myAnimateImageView = (ImageView)udtea.findViewById(R.id.image_display_imageview);
-
-		    //example: <task-node name="animate~frame-0-4~Happy Mike">
-		    //becomes "frame-0-4"
-			String myResName = UsbongUtils.getResName(udtea.currUsbongNode);
-			
-			StringTokenizer animate_st = new StringTokenizer(myResName, "-");
-			frameName = animate_st.nextToken();
-			startFrame = Integer.parseInt(animate_st.nextToken()); 
-			endFrame = Integer.parseInt(animate_st.nextToken())+1; 
-			
-//			animate_counter = startFrame;			
-			UsbongUtils.setImageDisplay(myAnimateImageView, udtea.myTree, frameName+animate_counter );
-
-			//Reference: http://stackoverflow.com/questions/4724355/draw-high-res-animations-with-high-frame-rate-on-android;
-			//last accessed: 20161222
-			//answer by: Lars Blumberg
-			//load all frames
-			// Loading the frames before starting the animation
-//			if (frames==null) {
-				frames = new ArrayList<Bitmap>();
-				for (int i = 0; i < endFrame; i++) {
-				    frames.add(UsbongUtils.getBitmap(udtea.myTree, frameName+i));
-				    // Do garbage collection every 3rd frame; really helps loading all frames into memory
-				    if (i % 3 == 0) {
-				        System.gc();
-				    }
-				}				
-				
-				if (!hasInitHandler) {
-					final Handler mRedrawHandler = new Handler();		    
-				    Runnable doAnimation = new Runnable() {
-			            public void run() {
-							animate_counter=(animate_counter+1)%endFrame;
-							myAnimateImageView.setImageBitmap(frames.get(animate_counter));
-							//do invalidate
-							myAnimateImageView.invalidate();
-							
-							mRedrawHandler.postDelayed(this, UsbongConstants.ANIMATION_DELAY);
-		                }
-		            };
-				    mRedrawHandler.postDelayed(doAnimation, UsbongConstants.ANIMATION_DELAY);
-				    hasInitHandler=true;
-				}
-//			}
-		} else if (udtea.currScreen == UsbongConstants.ANIMATE_AND_TEXT_SCREEN) {
-			udtea.setContentView(R.layout.animate_and_text_screen);
-			udtea.initBackNextButtons();
-			TextView myImageTextDisplayTextView = (TextView)udtea.findViewById(R.id.image_text_display_textview);
-			myImageTextDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myImageTextDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
-			myAnimateImageView = (ImageView)udtea.findViewById(R.id.image_display_imageview);
-
-		    //example: <task-node name="animate~frame-0-4~Happy Mike">
-		    //becomes "frame-0-4"
-			String myResName = UsbongUtils.getResName(udtea.currUsbongNode);
-			
-			StringTokenizer animate_st = new StringTokenizer(myResName, "-");
-			frameName = animate_st.nextToken();
-			startFrame = Integer.parseInt(animate_st.nextToken()); 
-			endFrame = Integer.parseInt(animate_st.nextToken())+1; 
-			
-//			animate_counter = startFrame;			
-			UsbongUtils.setImageDisplay(myAnimateImageView, udtea.myTree, frameName+animate_counter);
-
-			//Reference: http://stackoverflow.com/questions/4724355/draw-high-res-animations-with-high-frame-rate-on-android;
-			//last accessed: 20161222
-			//answer by: Lars Blumberg
-			//load all frames
-			// Loading the frames before starting the animation
-//			if (frames==null) {
-				frames = new ArrayList<Bitmap>();
-				for (int i = 0; i < endFrame; i++) {
-				    frames.add(UsbongUtils.getBitmap(udtea.myTree, frameName+i));
-				    // Do garbage collection every 3rd frame; really helps loading all frames into memory
-				    if (i % 3 == 0) {
-				        System.gc();
-				    }
-				}				
-				
-				if (!hasInitHandler) {
-					final Handler mRedrawHandler = new Handler();		    
-				    Runnable doAnimation = new Runnable() {
-			            public void run() {
-							animate_counter=(animate_counter+1)%endFrame;
-							myAnimateImageView.setImageBitmap(frames.get(animate_counter));
-							//do invalidate
-							myAnimateImageView.invalidate();
-							
-							mRedrawHandler.postDelayed(this, UsbongConstants.ANIMATION_DELAY);
-		                }
-		            };
-				    mRedrawHandler.postDelayed(doAnimation, UsbongConstants.ANIMATION_DELAY);
-				    hasInitHandler=true;
-				}
-//			}
-			
-			/**
-		     * Create a simple handler that we can use to cause animation to happen.  We
-		     * set ourselves as a target and we can use the sleep()
-		     * function to cause an update/invalidate to occur at a later date.
-		     */
-/*			class RefreshHandler extends Handler {
-		        @Override
-		        public void handleMessage(Message msg) {
-		        	//do updates
-					animate_counter=(animate_counter+1)%endFrame;
-					myAnimateImageView.setImageBitmap(frames.get(animate_counter));
-//					UsbongUtils.setImageDisplay(myAnimateImageView, udtea.myTree, frameName+animate_counter);
-					
-					//do invalidate
-					myAnimateImageView.invalidate();
-					//MyCanvas.this.invalidate();
-					
-					this.sleep(1000); //1000 is mMoveDelay
-		        }
-		        public void sleep(long delayMillis) {
-		                this.removeMessages(0);
-		            sendMessageDelayed(obtainMessage(0), delayMillis);
-		        }
-		    };
-		    
-		    RefreshHandler mRedrawHandler = new RefreshHandler();
-		    mRedrawHandler.sleep(1000);
-	*/	    
-			
-//			animate_counter=0;
-		} else if (udtea.currScreen == UsbongConstants.TEXT_AND_ANIMATE_SCREEN) {
-			udtea.setContentView(R.layout.text_and_animate_screen);
-			udtea.initBackNextButtons();
-			TextView myImageTextDisplayTextView = (TextView)udtea.findViewById(R.id.image_text_display_textview);
-			myImageTextDisplayTextView = (TextView) UsbongUtils.applyTagsInView(UsbongDecisionTreeEngineActivity.getInstance(), myImageTextDisplayTextView, UsbongUtils.IS_TEXTVIEW, udtea.currUsbongNode);
-			myAnimateImageView = (ImageView)udtea.findViewById(R.id.image_display_imageview);
-
-		    //example: <task-node name="animate~frame-0-4~Happy Mike">
-		    //becomes "frame-0-4"
-			String myResName = UsbongUtils.getResName(udtea.currUsbongNode);
-			
-			StringTokenizer animate_st = new StringTokenizer(myResName, "-");
-			frameName = animate_st.nextToken();
-			startFrame = Integer.parseInt(animate_st.nextToken()); 
-			endFrame = Integer.parseInt(animate_st.nextToken())+1; 
-			
-//			animate_counter = startFrame;			
-			UsbongUtils.setImageDisplay(myAnimateImageView, udtea.myTree, frameName+animate_counter);
-
-			//Reference: http://stackoverflow.com/questions/4724355/draw-high-res-animations-with-high-frame-rate-on-android;
-			//last accessed: 20161222
-			//answer by: Lars Blumberg
-			//load all frames
-			// Loading the frames before starting the animation
-//			if (frames==null) {
-				frames = new ArrayList<Bitmap>();
-				for (int i = 0; i < endFrame; i++) {
-				    frames.add(UsbongUtils.getBitmap(udtea.myTree, frameName+i));
-				    // Do garbage collection every 3rd frame; really helps loading all frames into memory
-				    if (i % 3 == 0) {
-				        System.gc();
-				    }
-				}				
-				
-				if (!hasInitHandler) {
-					final Handler mRedrawHandler = new Handler();		    
-				    Runnable doAnimation = new Runnable() {
-			            public void run() {
-							animate_counter=(animate_counter+1)%endFrame;
-							myAnimateImageView.setImageBitmap(frames.get(animate_counter));
-							//do invalidate
-							myAnimateImageView.invalidate();
-							
-							mRedrawHandler.postDelayed(this, UsbongConstants.ANIMATION_DELAY);
-		                }
-		            };
-				    mRedrawHandler.postDelayed(doAnimation, UsbongConstants.ANIMATION_DELAY);
-				    hasInitHandler=true;
-				}
-//			}
-		}		
-		else if (udtea.currScreen == UsbongConstants.IMAGE_DISPLAY_SCREEN) {
+		} else if (udtea.currScreen == UsbongConstants.IMAGE_DISPLAY_SCREEN) {
 			udtea.setContentView(R.layout.image_display_screen);
 			udtea.initBackNextButtons();
 			ImageView myImageDisplayScreenImageView = (ImageView)udtea.findViewById(R.id.special_imageview);
