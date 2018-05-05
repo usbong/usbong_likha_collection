@@ -1677,7 +1677,12 @@ public class UsbongDecisionTreeEngineActivity extends AppCompatActivity implemen
 			  isr = UsbongUtils.getTreeFromSDCardAsReader(myTree);
 
 			  if (isr==null) {
+				  //edited by Mike, 20180505
+				  Toast.makeText(getApplicationContext(), "Please allot at least 50MB of vacant storage space in your device memory.", Toast.LENGTH_LONG).show();  
+				  
+/*				  
 				  Toast.makeText(getApplicationContext(), "Error loading: "+myTree, Toast.LENGTH_LONG).show();  
+*/				  
 				  return;
 			  }
 //		  }
