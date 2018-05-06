@@ -87,4 +87,9 @@ public class UsbongConstants {
     public static final String MY_SAVED_LANGUAGE_SETTING = "MySavedLanguageSetting";
     
     public static final String MY_UTTERANCE_ID = "myUsbongTTSId";
+    
+    //added by Mike, 20180506
+    public static final String HELP_EMAIL_ADDRESS= "help@usbong.ph";
+    public static final String FEEDBACK_EMAIL_ADDRESS= "feedback@usbong.ph";
+
 }

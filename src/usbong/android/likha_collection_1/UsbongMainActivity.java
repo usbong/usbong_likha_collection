@@ -14,12 +14,6 @@
  */
 package usbong.android.likha_collection_1;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 import usbong.android.utils.AppRater;
 import usbong.android.utils.UsbongConstants;
 import usbong.android.utils.UsbongUtils;
@@ -32,7 +26,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +35,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 /*
  * This is Usbong's Main Menu activity. 
@@ -253,20 +246,36 @@ public class UsbongMainActivity extends AppCompatActivity/*Activity*/
 	        Drawable myDrawableImage = Drawable.createFromStream(myRes.getAssets().open("promo.jpg"), null); 
 	    	ImageView image = new ImageView(this);
 	    	image.setImageDrawable(myDrawableImage);	
-	    	
-	    	
+	    		    	
 			AlertDialog.Builder prompt = new AlertDialog.Builder(UsbongMainActivity.this);
 			prompt.setView(image);
 			prompt.setTitle("Usbong Promo Offer!");
 //			prompt.setMessage("Email us: help@usbong.ph");
-			prompt.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			prompt.setPositiveButton("Yes, please.", new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which) {					
+					//added by Mike, 20180506
+					//http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application;
+					//answer by: Jeremy Logan, 20100204
+					//added by Mike, 20180506
+				    Intent i = new Intent(Intent.ACTION_SEND);
+				    i.setType("message/rfc822"); //remove all non-email apps that support send intent from chooser
+				    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{UsbongConstants.HELP_EMAIL_ADDRESS});
+				    i.putExtra(Intent.EXTRA_SUBJECT, "Usbong Promo: ₱50 App Development");
+				    i.putExtra(Intent.EXTRA_TEXT   , "");
+
+				    try {
+				        startActivityForResult(Intent.createChooser(i, "Sending email..."), 1); 
+				    } catch (android.content.ActivityNotFoundException ex) {
+				        Toast.makeText(UsbongMainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+				    }	
+										
 		        	if (isTreeCompleted) {
 				        AppRater.showRateDialog(instance); 
 		        	}	        		
 				}
 			});
+			prompt.setNegativeButton("No, thanks.", null);
 			prompt.show();
     	}
     	catch(Exception e) {
